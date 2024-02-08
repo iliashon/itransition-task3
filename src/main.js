@@ -1,11 +1,14 @@
 const {Table} = require("./table");
 const {Interface} = require("./interface");
 const {Hash} = require("./hash");
+const {isOdd, hasRepeatArg} = require("./utils")
+
+const MIN_ARGUMENTS = 3;
 
 class Main{
   constructor(moveOptions) {
     this.moveOptions = moveOptions;
-    this.argumentsLength = this.moveOptions.length;
+    this.optionsLength = this.moveOptions.length;
     this.movePc = null;
     this.validatingArguments();
     this.hash = new Hash()
@@ -14,43 +17,41 @@ class Main{
     this.startGame();
   }
   validatingArguments() {
-    const MIN_ARGUMENTS = 3;
-    if (this.argumentsLength < MIN_ARGUMENTS) {
-      console.log('Error! --- Enter at least three possible moves!')
+    if (this.optionsLength < MIN_ARGUMENTS) {
+      this.interface.errorMinArg()
       this.stopGame()
-    } else if (this.argumentsLength % 2 === 0) {
-      console.log('Error! --- Enter an odd number of possible moves!')
+    } else if (isOdd(this.optionsLength)) {
+      this.interface.errorOdd()
+      this.stopGame()
+    } else if (hasRepeatArg(this.moveOptions)) {
+      this.interface.errorRepeatArg()
       this.stopGame()
     }
   }
   generatingPcMove() {
-    this.movePc = Math.floor(Math.random() * (this.argumentsLength - 0))
+    this.movePc = Math.floor(Math.random() * (this.optionsLength - 0))
+    this.hash.createHmac(this.moveOptions[this.movePc])
   }
   startGame() {
     this.generatingPcMove()
-    this.hash.createHmac(this.moveOptions[this.movePc])
-    console.log(`HMAC: ${this.hash.getHash()}`)
-    this.interface.renderGame()
-    process.stdout.write('Enter your move:')
+    this.interface.renderGame(this.hash.getHash())
     process.stdin.on('data', data => {
       if (data.toString().trim() === '?') {
-        console.clear()
         this.table.showTable()
-        console.log(`HMAC: ${this.hash.getHash()}`)
-        this.interface.renderGame()
-        process.stdout.write('Enter your move:')
+        this.interface.renderGame(this.hash.getHash())
       } else {
-        if (!Number(data)) {
-          console.clear()
-          console.log('Error! --- Enter a number!')
-          this.startGame()
-        } else if (Number(data) === 0) {
+        if (Number(data) === 0) {
           this.stopGame()
+        } else if (!Number(data)) {
+          this.interface.errorNumber()
+          this.interface.renderGame(this.hash.getHash())
         } else {
-          process.stdout.write(`Your move: ${this.moveOptions[Number(data) - 1]}\n`)
-          process.stdout.write(`PC move: ${this.moveOptions[this.movePc]}`)
-          this.table.checkWinner(this.movePc, Number(data) - 1)
-          console.log(`HMAC key: ${this.hash.getKey()}`)
+          this.interface.resultGame(
+            this.moveOptions[Number(data) - 1],
+            this.moveOptions[this.movePc],
+            this.table.checkWinner(this.movePc, Number(data) - 1),
+            this.hash.getKey()
+          )
           this.stopGame()
         }
       }

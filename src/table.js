@@ -17,12 +17,15 @@ class Table{
     })
   }
   showTable() {
+    console.clear()
     console.log(this.viewTable.toString())
   }
 
   checkWinner(movePc, moveUser) {
-    console.log(`\n${this.table[movePc][moveUser] === 0 ? 
-      "It's a Draw!" : this.table[movePc][moveUser] > 0 ? "You Win!" : "You Lose!"}`)
+    return this.table[movePc][moveUser] === 0 ?
+      "It's a Draw!" : this.table[movePc][moveUser] > 0 ? "You Win!" : "You Lose!"
+    // console.log(`${this.table[movePc][moveUser] === 0 ?
+    //   "It's a Draw!" : this.table[movePc][moveUser] > 0 ? "You Win!" : "You Lose!"}`)
   }
 
   createTable() {

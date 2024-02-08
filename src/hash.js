@@ -4,8 +4,8 @@ const ALGORITHM = 'sha3-256';
 
 class Hash {
   constructor() {
-    this.key = ''
-    this.hmac = ''
+    this.key = null
+    this.hmac = null
   }
   createKey() {
     this.key = crypto.generateKeySync('hmac', {length: 256}).export().toString('hex')
