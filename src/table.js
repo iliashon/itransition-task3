@@ -1,16 +1,31 @@
+const AsciiTable = require('ascii-table')
+
 class Table{
   constructor(moveOptions) {
     this.moveOption = moveOptions
     this.table = Array.from(Array(moveOptions.length), () => new Array(moveOptions.length));
-    this.createTable()
+    this.viewTable = new AsciiTable()
     this.getTable()
   }
-  getTable() {
-    console.log(this.table)
+  getTable(){
+    this.createTable()
+    this.viewTable.setHeading(['v PC\\User >', ...this.moveOption])
+      .setBorder('', '-', '-', '-')
+    this.moveOption.forEach((option, index) => {
+      this.viewTable.addRow([option, ...this.table[index]
+        .map(item => item === 0 ? "Draw" : item > 0 ? "Win" : "Lose")])
+    })
+  }
+  showTable() {
+    console.log(this.viewTable.toString())
+  }
+
+  checkWinner(movePc, moveUser) {
+    console.log(`\n${this.table[movePc][moveUser] === 0 ? 
+      "It's a Draw!" : this.table[movePc][moveUser] > 0 ? "You Win!" : "You Lose!"}`)
   }
 
   createTable() {
-    const [DRAW, WIN, LOSE] = [0, 1, -1]
     const OPTION_LENGTH = this.moveOption.length,
           AVERAGE = (OPTION_LENGTH - 1) / 2
     for (let i = 0; i < OPTION_LENGTH; i++) {
@@ -22,6 +37,8 @@ class Table{
   }
 }
 
+
+// const [DRAW, WIN, LOSE] = [0, 1, -1]
 // for (let i = 0; i < OPTION_LENGTH; i++) {
 //   let balance = 0;
 //   for (let j = 0; j < OPTION_LENGTH; j++) {
