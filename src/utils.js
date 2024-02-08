@@ -1,5 +1,5 @@
 function isOdd (n) {
-    return n % 2 === 0
+    return n % 2 === 1
 }
 
 function hasRepeatArg(args) {

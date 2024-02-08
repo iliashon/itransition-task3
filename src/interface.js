@@ -15,18 +15,9 @@ class Interface {
   resultGame(moveUser, movePc, winner, hmacKey) {
     console.log(`Your move: ${moveUser}\nPC move: ${movePc}\n${winner}\nHMAC key: ${hmacKey}`)
   }
-  errorOdd() {
-    console.log('Error! --- Enter an odd number of possible moves!')
-  }
-  errorRepeatArg() {
-    console.log('Error! --- Move options cannot be repeated, try again!')
-  }
-  errorMinArg() {
-    console.log('Error! --- Enter at least three possible moves!')
-  }
-  errorNumber() {
+  error(message) {
     console.clear()
-    console.log('Error! --- Enter a number!')
+    console.log(message)
   }
 }
 

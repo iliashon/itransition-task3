@@ -5,9 +5,9 @@ class Table{
     this.moveOption = moveOptions
     this.table = Array.from(Array(moveOptions.length), () => new Array(moveOptions.length));
     this.viewTable = new AsciiTable()
-    this.getTable()
+    this.createViewTable()
   }
-  getTable(){
+  createViewTable(){
     this.createTable()
     this.viewTable.setHeading(['v PC\\User >', ...this.moveOption])
       .setBorder('', '-', '-', '-')
@@ -16,16 +16,13 @@ class Table{
         .map(item => item === 0 ? "Draw" : item > 0 ? "Win" : "Lose")])
     })
   }
-  showTable() {
+  getTable() {
+    return this.table
+  }
+  showViewTable() {
     console.clear()
     console.log(this.viewTable.toString())
   }
-
-  checkWinner(movePc, moveUser) {
-    return this.table[movePc][moveUser] === 0 ?
-      "It's a Draw!" : this.table[movePc][moveUser] > 0 ? "You Win!" : "You Lose!"
-  }
-
   createTable() {
     const OPTION_LENGTH = this.moveOption.length,
           AVERAGE = (OPTION_LENGTH - 1) / 2
