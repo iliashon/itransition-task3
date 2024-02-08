@@ -7,11 +7,11 @@ const {CheckWinner} = require("./checkWinner");
 const MIN_ARGUMENTS = 3;
 
 const ERROR_MESSAGE = {
-  minArg: "Error! --- Enter at least three possible moves, try again!",
-  odd: "Error! --- Enter an odd number of possible moves, try again!",
-  repeatArg: "Error! --- Move options cannot be repeated, try again!",
-  noAnswer: "Error! --- There is no such answer, try again!",
-  notNumber: "Error! --- Enter a number, try again!"
+  minArg: "Enter at least three possible moves, try again!",
+  odd: "Enter an odd number of possible moves, try again!",
+  repeatArg: "Move options cannot be repeated, try again!",
+  noAnswer: "There is no such answer, try again!",
+  notNumber: "Enter a number, try again!"
 }
 
 class Main{
@@ -26,13 +26,13 @@ class Main{
   }
   validatingArguments() {
     if (this.optionsLength < MIN_ARGUMENTS) {
-      this.interface.error(ERROR_MESSAGE.minArg)
+      this.interface.errorFatality(ERROR_MESSAGE.minArg)
       this.stopGame()
     } else if (!isOdd(this.optionsLength)) {
-      this.interface.error(ERROR_MESSAGE.odd)
+      this.interface.errorFatality(ERROR_MESSAGE.odd)
       this.stopGame()
     } else if (hasRepeatArg(this.moveOptions)) {
-      this.interface.error(ERROR_MESSAGE.repeatArg)
+      this.interface.errorFatality(ERROR_MESSAGE.repeatArg)
       this.stopGame()
     }
   }

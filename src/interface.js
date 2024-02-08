@@ -1,23 +1,32 @@
+const consola = require("consola");
+
 class Interface {
   constructor(moveOptions) {
     this.moveOptions = moveOptions;
   }
   renderGame(hmac) {
-    let gameInterface = `HMAC: ${hmac}\nAvailable moves:\n`
-    let exitAndHelp = '0 - exit\n? - help'
+    let gameInterface = `HMAC: ${hmac.underline.reset}\nAvailable moves:\n`.bold,
+        exitAndHelp = '0 - exit\n? - help'.magenta.bold
     this.moveOptions.forEach((option, index) => {
-      gameInterface += `${index + 1} - ${option}\n`
+      gameInterface += `${index + 1} - ${option}\n`.cyan.italic
     })
     gameInterface += exitAndHelp
     console.log(gameInterface)
-    process.stdout.write('Enter your move:')
+    process.stdout.write('Enter your move: '.bold)
   }
   resultGame(moveUser, movePc, winner, hmacKey) {
-    console.log(`Your move: ${moveUser}\nPC move: ${movePc}\n${winner}\nHMAC key: ${hmacKey}`)
+    const yourMove = 'Your move: ' + moveUser.cyan.italic,
+          pcMove = 'PC move: ' + movePc.cyan.italic,
+          hmac = 'HMAC key: '.bold + hmacKey.underline.bold;
+    console.log(`${yourMove}\n${pcMove}\n${winner.bold}\n${hmac}`)
   }
-  error(message) {
+  error(message){
     console.clear()
-    console.log(message)
+    consola.warn(message)
+  }
+  errorFatality(message){
+    console.clear()
+    consola.error(message)
   }
 }
 

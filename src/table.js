@@ -1,4 +1,5 @@
 const AsciiTable = require('ascii-table')
+const colors = require('colors')
 
 class Table{
   constructor(moveOptions) {
@@ -21,7 +22,7 @@ class Table{
   }
   showViewTable() {
     console.clear()
-    console.log(this.viewTable.toString())
+    console.log(this.viewTable.toString().bgWhite.black)
   }
   createTable() {
     const OPTION_LENGTH = this.moveOption.length,

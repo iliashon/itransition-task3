@@ -10,6 +10,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "ascii-table": "^0.0.9"
+    "ascii-table": "^0.0.9",
+    "colors": "^1.4.0",
+    "consola": "^3.2.3"
   }
 }
