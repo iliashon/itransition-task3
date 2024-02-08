@@ -24,8 +24,6 @@ class Table{
   checkWinner(movePc, moveUser) {
     return this.table[movePc][moveUser] === 0 ?
       "It's a Draw!" : this.table[movePc][moveUser] > 0 ? "You Win!" : "You Lose!"
-    // console.log(`${this.table[movePc][moveUser] === 0 ?
-    //   "It's a Draw!" : this.table[movePc][moveUser] > 0 ? "You Win!" : "You Lose!"}`)
   }
 
   createTable() {
@@ -39,30 +37,5 @@ class Table{
     }
   }
 }
-
-
-// const [DRAW, WIN, LOSE] = [0, 1, -1]
-// for (let i = 0; i < OPTION_LENGTH; i++) {
-//   let balance = 0;
-//   for (let j = 0; j < OPTION_LENGTH; j++) {
-//     if (i === j) {
-//       this.table[i][j] = DRAW
-//     } else if (i > j) {
-//       balance += this.table[i][j];
-//     } else {
-//       if (balance <= 0) {
-//         this.table[i][j] = WIN
-//         this.table[j][i] = WIN
-//         balance += WIN
-//       } else {
-//         this.table[i][j] = LOSE
-//         this.table[j][i] = LOSE
-//         balance += LOSE
-//       }
-//     }
-//   }
-// }
-
-// Array.from(Array(moveOptions.length), () => new Array(moveOptions.length))
 
 module.exports = {Table}
