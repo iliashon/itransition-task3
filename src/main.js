@@ -1,7 +1,7 @@
 const {Table} = require("./table");
 const {Interface} = require("./interface");
 const {Hash} = require("./hash");
-const {isOdd, hasRepeatArg} = require("./utils")
+const {isOdd, hasRepeatArg, randomNumber} = require("./utils")
 const {CheckWinner} = require("./checkWinner");
 
 const MIN_ARGUMENTS = 3;
@@ -37,7 +37,7 @@ class Main{
     }
   }
   generatingPcMove() {
-    this.movePc = Math.floor(Math.random() * (this.optionsLength - 0))
+    this.movePc = randomNumber(this.optionsLength)
     this.hash.createHmac(this.moveOptions[this.movePc])
   }
   startGame() {
